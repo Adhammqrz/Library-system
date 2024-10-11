@@ -1,3 +1,7 @@
+#ifndef MAIN_H
+#define MAIN_H
+
+
 #include <stdio.h>
 #include <string.h>
 
@@ -8,33 +12,18 @@ typedef struct{
     int role;
 } User;
 
-int validation(User *data,int totaluser, char *inputusername ,char *inputpass){
-        for (int i=0; i<totaluser; i++)
-        {
-            if (strcmp(data[i].username, inputusername) == 0 && strcmp(data[i].password, inputpass) == 0)
-                return data[i].role;
-            }
-        return -1;
-}
+typedef struct{
+    char id[50];
+    char title[50];
+    char author[50];
+    char genre[50];
+    int quantity;
+} Book;
 
 
-int loaduserdata(char *filename, User *data){
-    FILE *fptr=fopen(filename,"r");
+int validation(User *data, int totaluser, char *inputusername, char *inputpass);
 
-    if (fptr==NULL){
-        printf("Error: no %s found!", filename);
-        return 0;
-    }
+int loaduserdata(char *filename, User *data);
+#endif // MAIN_H
 
-    /*char line[100];*/
-    int counter=0;
-    char line[100];
-
-    while (fgets(line, sizeof(line),fptr)){
-        sscanf(line,"%s %s %d", data[counter].username, data[counter].password, &data[counter].role);
-        counter++;
-    }
-    fclose(fptr);
-    return counter;
-}
 
