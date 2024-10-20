@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
+
 void librarianoptiondisplay(){
     printf("\n--- Welcome to the librarian page ---\n");
     printf("\n----------------------------------\n");
@@ -9,7 +10,7 @@ void librarianoptiondisplay(){
     printf("3. Borrowing and Return\n");
     printf("4. Report Generation\n");
     printf("0. exit\n");
-    printf("Your input:");
+    printf("Please choose:");
 }
 
 void librarianmenu()
@@ -33,8 +34,8 @@ void librarianmenu()
 
                     case 2:
                         membermanagement();
+                        printf("okay");
                         break;
-
 
                     case 3:
                         borrowreturn();
@@ -106,17 +107,18 @@ void bookmanagement(){
 
         if (domain1==1)
         {
+            printf("\n--- Book addition ---\n");
             addbook();
             break;
         }
         else if (domain1==2){
-            printf("update book");
+            printf("\n--- Book updation ---\n");
             displaybook();
             updatebook();
             break;
         }
         else if (domain1==3){
-            printf("removebook");
+            printf("\n--- Book deletion ---\n");
             displaybook();
             deletebook();
             break;
@@ -143,24 +145,32 @@ void membermanagement(){
         while ((c = getchar()) != '\n' && c != EOF);
         }
 
-        if (domain2==1)
-        {
-            printf("add new member");
-        }
-        else if (domain2==2){
-            printf("update member");
-        }
-        else if (domain2==3){
+        switch (domain2){
+        case 1:
+            printf("\n--- Member Registration ---\n");
+            registermember();
+            break;
+
+        case 2:
+            printf("\n--- Member Information Updation ---\n");
+            displaymember();
+            updatemember();
+            break;
+
+        case 3:
             printf("membership");
-        }
-        else if (domain2==0){
+            break;
+        case 0:
             printf("....");
-        }
-        else{
+            break;
+        default:
             printf("Invalid Input! Please try again");
-        }
+            }
 
         }while (domain2!=0);
+
+        printf("okay");
+
 }
 
 void borrowreturn(){
@@ -221,3 +231,5 @@ void reportgeneration(){
 
         }while (domain4!=0);
 }
+
+
