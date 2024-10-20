@@ -1,100 +1,234 @@
-#include "main.h"
+#include <stdio.h>
+#include <string.h>
 
-int validation(User *data,int totaluser, char *inputusername ,char *inputpass){
-        for (int i=0; i<totaluser; i++)
-        {
-            if (strcmp(data[i].username, inputusername) == 0 && strcmp(data[i].password, inputpass) == 0)
-                return data[i].role;
-            }
-        return -1;
+
+void librarianoptiondisplay(){
+    printf("\n--- Welcome to the librarian page ---\n");
+    printf("\n----------------------------------\n");
+    printf("1. Book Inventory Management\n");
+    printf("2. Membership Management\n");
+    printf("3. Borrowing and Return\n");
+    printf("4. Report Generation\n");
+    printf("0. exit\n");
+    printf("Please choose:");
 }
 
-
-int loaduserdata(char *filename, User *data){
-    FILE *fptr=fopen(filename,"r");
-
-    if (fptr==NULL){
-        printf("Error: no %s found!", filename);
-        return 0;
-    }
-
-    int counter=0;
-    char line[100];
-
-    while (fgets(line, sizeof(line),fptr)){
-        sscanf(line,"%s %s %d", data[counter].username, data[counter].password, &data[counter].role);
-        counter++;
-    }
-    fclose(fptr);
-    return counter;
-}
-
-int main()
+void librarianmenu()
 {
-    User userdata[100];
-    char username[30];
-    char password[30];
-    int totalusers=loaduserdata("userdata.txt", userdata);
-    int loginchoice;
+            int domainchoice;
+            ///book inventory
+            do{
+                librarianoptiondisplay();
+                while (scanf("%d", &domainchoice) != 1) {
+                printf("Invalid input! Please try again.\n");
+                librarianoptiondisplay();
+                int c;
+                while ((c = getchar()) != '\n' && c != EOF);
+                }
 
+
+                switch (domainchoice){
+                    case 1:
+                        bookmanagement();
+                        break;
+
+                    case 2:
+                        membermanagement();
+                        printf("okay");
+                        break;
+
+                    case 3:
+                        borrowreturn();
+                        break;
+
+                    case 4:
+                        reportgeneration();
+                        break;
+
+                    case 0:
+                        printf("....");
+                        break;
+                        main();
+
+                    default:
+                        printf("invalid input! Please try again!\n");
+                }
+            }while (domainchoice!=0);
+
+
+}
+
+
+void displayoption(int domain){
+    if (domain==1){
+        printf("\n--- Book Inventory Management ---\n");
+        printf("\n1. Add Books");
+        printf("\n2. Update Books");
+        printf("\n3. Remove Books");
+        printf("\n0. exit");
+        printf("\nplease choose:");
+    }
+
+    if (domain==2){
+        printf("\n--- Membership Management ---\n");
+        printf("\n1. Add New Member");
+        printf("\n2. Update Member Information");
+        printf("\n3. Manage Memberships");
+        printf("\n0. exit");
+        printf("\nplease choose:");
+    }
+    if (domain==3){
+        printf("\n--- Borrowing and Return ---\n");
+        printf("\n1. Book Borrowed List");
+        printf("\n2. Overdue Fines");
+        printf("\n0. exit");
+        printf("\nplease choose:");
+    }
+    if (domain==4){
+        printf("\n--- Report Generation ---\n");
+        printf("\n1. Popular Books");
+        printf("\n2. Overdue Books");
+        printf("\n3. Book Circulation");
+        printf("\n0. exit");
+        printf("\nplease choose:");
+    }
+}
+
+void bookmanagement(){
+    int domain1;
     do{
-        printf("\n---- APU Digital Library System ----\n");
-        printf("\n(1)Login | (2)Guest | (3)Register | (0) exit \n Please choose:");
-        while (scanf("%d", &loginchoice) != 1) {
-            printf("Invalid input! Please try again.\n");
-            printf("\n---- APU Digital Library System ----\n");
-            printf("\n(1)Login | (2)Guest | (3)Register | (0) exit \n Please choose:");
-            int c;
-            while ((c = getchar()) != '\n' && c != EOF);
+        displayoption(1);
+        while (scanf("%d", &domain1) != 1) {
+        printf("Invalid input! Please try again.\n");
+        displayoption(1);
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
         }
 
-        switch (loginchoice){
+        if (domain1==1)
+        {
+            printf("\n--- Book addition ---\n");
+            addbook();
+            break;
+        }
+        else if (domain1==2){
+            printf("\n--- Book updation ---\n");
+            displaybook();
+            updatebook();
+            break;
+        }
+        else if (domain1==3){
+            printf("\n--- Book deletion ---\n");
+            displaybook();
+            deletebook();
+            break;
+        }
+        else if (domain1==0){
+            printf("....");
+        }
+        else{
+            printf("Invalid Input! Please try again");
+        }
+
+        }while (domain1!=0);
+}
+
+
+void membermanagement(){
+    int domain2;
+    do{
+        displayoption(2);
+        while (scanf("%d", &domain2) != 1) {
+        printf("Invalid input! Please try again.\n");
+        displayoption(2);
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+        }
+
+        switch (domain2){
         case 1:
-            printf("\nPlease Login!");
-            printf("\nenter your usename:");
-            scanf("%s",&username);
-            printf("\nenter your password:");
-            scanf("%s",&password);
-
-            int role = validation(userdata,totalusers,username,password);
-
-            if (role==1)
-            {
-                printf("login successful!\n");
-                librarianmenu();
-            }
-            else if (role==2)
-            {
-                printf("login successful! welcome staff");
-            }
-            else if (role==3)
-            {
-                printf("login successful! welcome member");
-            }
-            else
-            {
-                printf("login failed!");
-            }
+            printf("\n--- Member Registration ---\n");
+            registermember();
             break;
 
-
         case 2:
-            printf("\nWelcome, guest!");
+            printf("\n--- Member Information Updation ---\n");
+            displaymember();
+            updatemember();
             break;
 
         case 3:
-            printf("\nplease register!");
+            printf("membership");
             break;
-
         case 0:
-            printf("exiting...\n");
+            printf("....");
             break;
-
         default:
-            printf("Invalid input! Please try again!\n");
-        }
+            printf("Invalid Input! Please try again");
+            }
 
-    }while (loginchoice!=0);
-    return 0;
+        }while (domain2!=0);
+
+        printf("okay");
 
 }
+
+void borrowreturn(){
+    int domain3;
+    do{
+        displayoption(3);
+        while (scanf("%d", &domain3) != 1) {
+        printf("Invalid input! Please try again.\n");
+        displayoption(3);
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+        }
+
+        if (domain3==1)
+        {
+            printf("book borrow list");
+        }
+        else if (domain3==2){
+            printf("overdue fines");
+        }
+        else if (domain3==0){
+            printf("....");
+        }
+        else{
+            printf("Invalid Input! Please try again");
+        }
+
+        }while (domain3!=0);
+}
+
+void reportgeneration(){
+    int domain4;
+    do{
+        displayoption(4);
+        while (scanf("%d", &domain4) != 1) {
+        printf("Invalid input! Please try again.\n");
+        displayoption(4);
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+        }
+
+        if (domain4==1)
+        {
+            printf("popular book");
+        }
+        else if (domain4==2){
+            printf("overdue book");
+        }
+        else if (domain4==3){
+            printf("book circulation");
+        }
+        else if (domain4==0){
+            printf("....");
+        }
+        else{
+            printf("Invalid Input! Please try again");
+        }
+
+        }while (domain4!=0);
+}
+
