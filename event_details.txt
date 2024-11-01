@@ -1,0 +1,18 @@
+
+'Book Reading: Local Authors', Join us for a book reading session with local authors, where they share their works and experiences. Its an open event for all literature lovers.| Oct, 25, 2024, 4:00PM - 6:00PM, Main Library Hall
+'Workshop: Creative Writing', Unleash your creativity with guided writing exercises and prompts to inspire your inner writer.| Nov, 2, 2024, 10:00AM - 12:00PM, Room 204
+'Community Program: Storytelling Hour', Gather for an enchanting storytelling session for all ages. Perfect for families and young listeners.| Nov, 15, 2024, 3:00PM - 4:30PM, Children's Section
+'Workshop: Art of Poem', Explore the art of poetry with an expert-led workshop, delving into rhythm, structure, and expression.| Dec, 17, 2024, 1:00PM - 3:00PM, Room 305
+'Community Program: Children's Art Workshop', A fun-filled workshop where kids can explore their creativity through painting and drawing.| Dec, 10, 2024, 10:30AM - 12:30PM, Kids' Art Room
+'Community Program: Health and Wellness Fair', Discover health resources, free screenings, and wellness talks to promote healthy living.| Jan, 20, 2025, 9:00AM - 3:00PM, Community Hall
+'Workshop: Public Speaking Skills', Enhance your public speaking abilities with practical exercises and expert guidance.| Mar, 22, 2025, 11:00AM - 1:00PM, Room 102
+'Community Program: Neighborhood Cleanup Day', Join us to clean up and beautify our neighborhood, followed by a picnic lunch.| Mar, 8, 2025, 9:00AM - 12:00PM, Meet at Library Entrance
+'Workshop: Introduction to Coding', Begin your journey in coding with this beginner-friendly workshop covering fundamental concepts.| Apr, 15, 2025, 10:00AM - 12:00PM, Computer Lab
+'Community Program: Local History Walk', Walk through our town's historical landmarks with a local historian as your guide.| Apr, 14, 2025, 1:00PM - 3:00PM, Meet at Library Entrance
+'Workshop: Watercolor Painting', Learn the basics of watercolor techniques and create your own beautiful artwork.| May, 10, 2025, 10:30AM - 12:30PM, Art Studio
+'Community Program: Senior Citizens Tech Help', Receive assistance with smartphones, tablets, and other tech gadgets.| May, 5, 2025, 2:00PM - 4:00PM, Tech Support Desk
+'Workshop: Self-Publishing Workshop', A guide to self-publishing, covering topics from writing to marketing your own book.| Jun, 18, 2025, 1:30PM - 3:30PM, Room 201
+'Community Program: Family Game Night', Enjoy a night of fun board games, snacks, and laughter for the whole family.| Jun, 12, 2025, 6:00PM - 8:00PM, Community Hall
+'Workshop: Mindfulness Meditation', Learn techniques for mindfulness and meditation to help reduce stress.| Jul, 25, 2025, 9:30AM - 11:00AM, Meditation Room
+'Community Program: Gardening for Beginners', A hands-on workshop covering the basics of starting your own garden.| Jul, 22, 2025, 10:00AM - 12:00PM, Outdoor Garden Area
+'Workshop: Yoga for Beginners', Discover the fundamentals of yoga and improve flexibility in a supportive environment.| Sep, 16, 2025, 8:30AM - 10:00AM, Yoga Room

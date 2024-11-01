@@ -1,0 +1,19 @@
+
+'Book Reading: Local Authors', Oct, 25, 2024
+'Workshop: Creative Writing', Nov, 2,  2024
+'Community Program: Storytelling Hour', Nov, 15, 2024
+'Workshop: Art of Poem', Dec, 17, 2024
+'Community Program: Children's Art Workshop', Dec, 10, 2024
+'Community Program: Health and Wellness Fair', Jan, 20, 2025
+'Workshop: Public Speaking Skills', Mar, 22, 2025
+'Community Program: Neighborhood Cleanup Day', Mar, 8, 2025
+'Workshop: Introduction to Coding', Apr, 15, 2025
+'Community Program: Local History Walk', Apr, 14, 2025
+'Workshop: Watercolor Painting', May, 10, 2025
+'Community Program: Senior Citizens Tech Help', May, 5, 2025
+'Workshop: Self-Publishing Workshop', Jun, 18, 2025
+'Community Program: Family Game Night', Jun, 12, 2025
+'Workshop: Mindfulness Meditation', Jul, 25, 2025
+'Community Program: Gardening for Beginners', Jul, 22, 2025
+'Workshop: Yoga for Beginners', Sep, 16, 2025
+
