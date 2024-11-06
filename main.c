@@ -90,7 +90,8 @@ int main()
             }
             else if (role==3)
             {
-                printf("login successful! welcome member");
+                printf("login successful!\n");
+                membermenu();
             }
             else
             {
@@ -101,6 +102,7 @@ int main()
 
         case 2:
             printf("\nWelcome, guest!");
+            guestmenu();
             break;
 
         case 3:
@@ -120,4 +122,3 @@ int main()
     return 0;
 
 }
-
