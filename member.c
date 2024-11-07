@@ -1,17 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-// Function to log each book search to the search history file
-void logSearchHistory(char *title) {
-    FILE *file = fopen("search_history.txt", "a");
-    if (file == NULL) {
-        printf("Error: Could not open search history file.\n");
-        return;
-    }
-    fprintf(file, "%s\n", title);
-    fclose(file);
-}
-
 // Function to search for a book in the library catalog
 void searchBook() {
     char title[50];
@@ -28,16 +17,16 @@ void searchBook() {
     int found = 0;
 
     while (fgets(line, sizeof(line), file)) {
-        char bookID[10], bookTitle[50], author[50], genre[20], price[10], format[20];
+        char bookID[10], bookTitle[50], author[50], genre[20], available[10], format[20];
+        int copies;
 
         // Parse the line according to the new format
-        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,],%s", bookID, bookTitle, author, genre, price, format);
+        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%d,%s", bookID, bookTitle, author, genre, &copies, format);
 
         if (strstr(bookTitle, title) != NULL) {
-            printf("Book found:\nID: %s\nTitle: %s\nAuthor: %s\nGenre: %s\nPrice: %s\nFormat: %s\n",
-                    bookID, bookTitle, author, genre, price, format);
+            printf("Book found:\nID: %s\nTitle: %s\nAuthor: %s\nGenre: %s\nCopies Available: %d\nFormat: %s\n",
+                   bookID, bookTitle, author, genre, copies, format);
             found = 1;
-            logSearchHistory(title); // Log the search
             break;
         }
     }
@@ -48,12 +37,15 @@ void searchBook() {
     fclose(file);
 }
 
-// Function to reserve a book if available (assuming physical books only)
+// Function to reserve a book if available
 void reserveBook() {
     char title[50];
     FILE *file = fopen("books.txt", "r+");
-    if (file == NULL) {
-        printf("Error: Could not open books file.\n");
+    FILE *accountFile = fopen("account.txt", "a");
+    if (file == NULL || accountFile == NULL) {
+        printf("Error: Could not open books or account file.\n");
+        if (file != NULL) fclose(file);
+        if (accountFile != NULL) fclose(accountFile);
         return;
     }
 
@@ -65,17 +57,21 @@ void reserveBook() {
     long pos;
 
     while (fgets(line, sizeof(line), file)) {
-        char bookID[10], bookTitle[50], author[50], genre[20], price[10], format[20];
+        char bookID[10], bookTitle[50], author[50], genre[20], format[20];
+        int copies;
 
-        // Parse the line
-        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,],%s", bookID, bookTitle, author, genre, price, format);
+        // Parse the line and get the number of available copies
+        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%d,%s", bookID, bookTitle, author, genre, &copies, format);
 
-        if (strstr(bookTitle, title) != NULL && strcmp(format, "physical") == 0) {
+        if (strstr(bookTitle, title) != NULL && strcmp(format, "physical") == 0 && copies > 0) {
             found = 1;
             pos = ftell(file) - strlen(line);
             fseek(file, pos, SEEK_SET);
-            fprintf(file, "%s,%s,%s,%s,%s,%s\n", bookID, bookTitle, author, genre, price, "reserved");
+            fprintf(file, "%s,%s,%s,%s,%d,%s\n", bookID, bookTitle, author, genre, copies - 1, format);
             printf("Book reserved successfully.\n");
+
+            // Update the account file with the reserved book details
+            fprintf(accountFile, "Reserved Book: ID=%s, Title=%s\n",bookID, bookTitle);
             break;
         }
     }
@@ -84,6 +80,7 @@ void reserveBook() {
         printf("Book not available or not found.\n");
     }
     fclose(file);
+    fclose(accountFile);
 }
 
 
@@ -138,50 +135,42 @@ void payFines() {
     fclose(file);
 }
 
-
 void recommendBooks() {
-    FILE *history = fopen("search_history.txt", "r");
     FILE *books = fopen("books.txt", "r");
-    if (history == NULL || books == NULL) {
-        printf("Error: Could not open files for recommendations.\n");
-        if (history) fclose(history);
-        if (books) fclose(books);
+    if (books == NULL) {
+        printf("Error: Could not open books file for recommendations.\n");
         return;
     }
 
-    char lastSearch[50];
+    char preferredGenre[20];
     char line[200];
     int found = 0;
 
+    printf("Enter your preferred genre: ");
+    scanf(" %[^\n]%*c", preferredGenre);
 
-    while (fgets(lastSearch, sizeof(lastSearch), history)) {
-
-    }
-    fclose(history);
-
-    printf("\n--- Book Recommendations ---\n");
+    printf("\n--- Book Recommendations in Genre: %s ---\n", preferredGenre);
     while (fgets(line, sizeof(line), books)) {
-        char bookID[10], bookTitle[50], author[50], genre[20], price[10], format[20];
+        char bookID[10], bookTitle[50], author[50], genre[20], available[10], format[20];
+        int copies;
 
+        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%d,%s", bookID, bookTitle, author, genre, &copies, format);
 
-        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,],%s", bookID, bookTitle, author, genre, price, format);
-
-
-        if (strstr(bookTitle, lastSearch) != NULL || strstr(author, lastSearch) != NULL || strcmp(format, "physical") == 0) {
-            printf("ID: %s\nTitle: %s\nAuthor: %s\nGenre: %s\nPrice: %s\nFormat: %s\n\n",
-                   bookID, bookTitle, author, genre, price, format);
+        if (strcasecmp(genre, preferredGenre) == 0) {
+            printf("ID: %s\nTitle: %s\nAuthor: %s\nGenre: %s\nCopies Available: %d\nFormat: %s\n\n",
+                   bookID, bookTitle, author, genre, copies, format);
             found = 1;
         }
     }
 
     if (!found) {
-        printf("No specific recommendations available based on your search history.\n");
+        printf("No books available in the genre \"%s\".\n", preferredGenre);
     }
     fclose(books);
 }
 
 
-int main() {
+void membermenu() {
     int choice;
 
     while (1) {
@@ -191,7 +180,7 @@ int main() {
         printf("3. View account details\n");
         printf("4. Renew borrowed items\n");
         printf("5. Pay fines\n");
-        printf("6. View book recommendations\n");
+        printf("6. View Book Recommendations\n");
         printf("0. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
@@ -217,11 +206,11 @@ int main() {
                 break;
             case 0:
                 printf("Exiting the system. Goodbye!\n");
-                return 0;
+                return;
             default:
                 printf("Invalid choice. Please try again.\n");
         }
     }
-
-    return 0;
 }
+
+
