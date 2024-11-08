@@ -1,2 +1,6 @@
 
-0001,the alchemist,paulo coelho,fiction,50,physical
+-,0001,the catcher in the rye,J.D Salinger,fiction,available,physical
+-,0002,1984,George Orwell,fiction,available,physical
+-,0003,Brave New World,Aldous Huxley,Fiction,unavailable,physical
+-,0004,The Great Gatsby,F.S Fitzgerald,Fiction,available,digital
+-,0005,A brief History of Time,Stephen Hawking,science,available,digital
