@@ -1,9 +1,0 @@
-
-'Creative Writing', Nov, 2, 2024
-'Art of Poem', Dec, 17, 2024
-'Public Speaking Skills', Mar, 22, 2025
-'Introduction to Coding', Apr, 15, 2025
-'Watercolor Painting', May, 10, 2025
-'Self-Publishing Workshop', Jun, 18, 2025
-'Mindfulness Meditation', Jul, 25, 2025
-'Yoga for Beginners', Sep, 16, 2025
