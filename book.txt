@@ -1,18 +1,18 @@
--,0001,The Catcher in The Rye,J.D. Salinger,Fiction,available,physical
--,0002,1984,George Orwell,Fiction,available,physical
--,0003,brave new world,Aldous Huxley,Fiction,unavailable,physical
--,0004,The Great Gatsby,F. Scott Fitzgerald,Fiction,available,digital
--,0005,A Brief History of Time,Stephen Hawking,Science,available,digital
--,0006,Moby Dick,Herman Melville,History,unavailable,physical
--,0007,The Wright Brothers,David McCullough,History,available,physical
--,0008,Guns Germs and Steel,Jared Diamond,History,available,digital
--,0009,Team of Rivals,Doris Kearns Goodwin,History,unavailable,digital
--,0010,Cosmos,Carl Sagan,Science,available,physical
--,0011,The Selfish Gene,Richard Dawkins,Science,available,physical
--,0012,The Gene: An Intimate History,Siddhartha Mukherjee,Science,unavailable,digital
--,0013,The Republic,Plato,Philosophy,available,digital
--,0014,Beyond Good and Evil,Friedrich Nietzsche,Philosophy,available,physical
--,0015,The Art of War,Sun Tzu,Philosophy,unavailable,physical
--,0016,Steve Jobs,Walter Isaacson,Biography,available,physical
--,0017,The Story of My Life,Helen Keller,Biography,available,digital
--,0018,Long Walk to Freedom,Nelson Mandela,Biography,unavailable,physical
+-,0001,The Catcher in The Rye,J.D. Salinger,Fiction,available,Physical
+-,0002,1984,George Orwell,Fiction,available,Physical
+-,0003,brave new world,Aldous Huxley,Fiction,unavailable,Physical
+-,0004,The Great Gatsby,F. Scott Fitzgerald,Fiction,available,Digital
+-,0005,A Brief History of Time,Stephen Hawking,Science,available,Digital
+-,0006,Moby Dick,Herman Melville,History,unavailable,Physical
+-,0007,The Wright Brothers,David McCullough,History,available,Physical
+-,0008,Guns Germs and Steel,Jared Diamond,History,available,Digital
+-,0009,Team of Rivals,Doris Kearns Goodwin,History,unavailable,Digital
+-,0010,Cosmos,Carl Sagan,Science,available,Physical
+-,0011,The Selfish Gene,Richard Dawkins,Science,available,Physical
+-,0012,The Gene: An Intimate History,Siddhartha Mukherjee,Science,unavailable,Digital
+-,0013,The Republic,Plato,Philosophy,available,Digital
+-,0014,Beyond Good and Evil,Friedrich Nietzsche,Philosophy,available,Physical
+-,0015,The Art of War,Sun Tzu,Philosophy,unavailable,Physical
+-,0016,Steve Jobs,Walter Isaacson,Biography,available,Physical
+-,0017,The Story of My Life,Helen Keller,Biography,available,Digital
+-,0018,Long Walk to Freedom,Nelson Mandela,Biography,unavailable,Physical
