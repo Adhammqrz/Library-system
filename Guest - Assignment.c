@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 #define MAX_TITLE_LENGTH 100
 #define MAX_SUMMARY_LENGTH 1000
@@ -163,7 +162,7 @@ void titleorauthor()
 
             if(strlen(searchTerm)<3)
             {
-                printf("Please enter at least 3 characters for more accurate finding.\n");
+                printf("\nPlease enter at least 3 characters for more accurate finding.\n");
             }
         }while (strlen(searchTerm)<3);
 
@@ -184,13 +183,13 @@ void titleorauthor()
                     printf("\nGenre: %s\n", book.genre);
                     printf("Title: %s\n", book.title);
                     printf("Author: %s\n", book.author);
-                    printf("\nThe Book are Available in Our Library.\n");
+                    printf("\nThe Book Exist in Our Library.\n");
                     found = 1;
                 }
             }
 
         if (!found) {
-            printf("No matching books found.\n");
+            printf("\nNo matching books found.\n");
         }
 
         fclose(file);
@@ -203,7 +202,7 @@ void titleorauthor()
 
             if(choice != 'y' && choice != 'Y' && choice != 'n' && choice != 'N')
             {
-                printf("Invalid input, Please enter 'Y' for Yes and 'N' for No.");
+                printf("\nInvalid input, Please enter 'Y' for Yes and 'N' for No.");
             }
         }while(choice != 'y' && choice != 'Y' && choice != 'n' && choice != 'N');
 
@@ -232,9 +231,13 @@ void available()
     // Read until the end of the file
     while (fscanf(file, "%[^,], %[^,], %[^,], %[^,],%[^,], %[^,], %[^\n]", book.shelfID, book.ID, book.title, book.author, book.genre, book.availability, book.version) == 7)
         {
-            printf("\nGenre: %s\n", book.genre);
-            printf("Title: %s\n", book.title);
-            printf("Author: %s\n", book.author);
+            if (strcasecmp(book.availability, "available") == 0)
+            {
+                printf("\nGenre: %s\n", book.genre);
+                printf("Title: %s\n", book.title);
+                printf("Author: %s\n", book.author);
+                printf("Book's Format: %s\n", book.version);
+            }
         }
 
     fclose(file);
@@ -309,7 +312,7 @@ void booksummary()
         getchar();
         if (choice != 'y' && choice != 'Y' && choice != 'n' && choice != 'N')
         {
-            printf("Invalid input, please enter 'Y' for Yes and 'N' for No.\n");
+            printf("\nInvalid input, please enter 'Y' for Yes and 'N' for No.\n");
         }
     } while (choice != 'y' && choice != 'Y' && choice != 'n' && choice != 'N');
 
@@ -328,7 +331,7 @@ void booksummary()
         do
         {
             printf("\n========================");
-            printf("\nEnter the Book Title: ");
+            printf("\n\nEnter the Book Title: ");
             fgets(booksearch, sizeof(booksearch), stdin);
             booksearch[strcspn(booksearch, "\n")] = 0; // Remove newline character
             if (strlen(booksearch) < 3)
@@ -361,7 +364,7 @@ void booksummary()
 
         if (!found)
         {
-            printf("No matching books found.\n");
+            printf("\nNo matching books found.\n");
         }
 
         fclose(file);
@@ -374,7 +377,7 @@ void booksummary()
 
             if(choice != 'y' && choice != 'Y' && choice != 'n' && choice != 'N')
             {
-                printf("Invalid input, Please enter 'Y' for Yes and 'N' for No.");
+                printf("\nInvalid input, Please enter 'Y' for Yes and 'N' for No.");
             }
         }while(choice != 'y' && choice != 'Y' && choice != 'n' && choice != 'N');
 
@@ -459,7 +462,7 @@ void upcomingevent()
         getchar();
         if(choice != 'y' && choice != 'Y' && choice != 'n' && choice != 'N')
         {
-            printf("Invalid input, Please enter 'Y' for Yes and 'N' for No.");
+            printf("\nInvalid input, Please enter 'Y' for Yes and 'N' for No.");
         }
         else if (choice == 'y' || choice == 'Y')
         {
@@ -587,7 +590,7 @@ void print_by_event_type(const char *eventtype)
         scanf(" %c", &choice);
         getchar();
         if (choice != 'y' && choice != 'Y' && choice != 'n' && choice != 'N') {
-            printf("Invalid input, Please enter 'Y' for Yes and 'N' for No.");
+            printf("\nInvalid input, Please enter 'Y' for Yes and 'N' for No.");
         } else if (choice == 'y' || choice == 'Y') {
             printf("\n[Please register at the Front Desk or Visit our Website.]\n");
             return;
