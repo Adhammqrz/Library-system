@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-// Function to search for a book in the library catalog
+
 void searchBook() {
     char title[50];
     FILE *file = fopen("books.txt", "r");
@@ -20,7 +20,7 @@ void searchBook() {
         char bookID[10], bookTitle[50], author[50], genre[20], available[10], format[20];
         int copies;
 
-        // Parse the line according to the new format
+        
         sscanf(line, "%[^,],%[^,],%[^,],%[^,],%d,%s", bookID, bookTitle, author, genre, &copies, format);
 
         if (strstr(bookTitle, title) != NULL) {
@@ -37,7 +37,6 @@ void searchBook() {
     fclose(file);
 }
 
-// Function to reserve a book if available
 void reserveBook() {
     char title[50];
     FILE *file = fopen("books.txt", "r+");
@@ -60,7 +59,7 @@ void reserveBook() {
         char bookID[10], bookTitle[50], author[50], genre[20], format[20];
         int copies;
 
-        // Parse the line and get the number of available copies
+       
         sscanf(line, "%[^,],%[^,],%[^,],%[^,],%d,%s", bookID, bookTitle, author, genre, &copies, format);
 
         if (strstr(bookTitle, title) != NULL && strcmp(format, "physical") == 0 && copies > 0) {
@@ -70,7 +69,7 @@ void reserveBook() {
             fprintf(file, "%s,%s,%s,%s,%d,%s\n", bookID, bookTitle, author, genre, copies - 1, format);
             printf("Book reserved successfully.\n");
 
-            // Update the account file with the reserved book details
+          
             fprintf(accountFile, "Reserved Book: ID=%s, Title=%s\n",bookID, bookTitle);
             break;
         }
@@ -102,7 +101,7 @@ void viewAccount() {
 
 void renewBorrowedItems() {
     printf("All borrowed items have been renewed successfully.\n");
-    // For a full implementation, you would update the due dates in the borrowing history file.
+   
 }
 
 
