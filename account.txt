@@ -1,5 +1,5 @@
-Member ID: 1001
+Member ID: a1001
 Name: Lee Anwen
 Overdue Fine: $5.00
-Reserved Book: ID=00005, Title=The Great Gatsby
-Reserved Book: ID=0021, Title=The Book Thief
+Member ID: a1092 | Book ID: 0006 | Reservation Date: 12/12
+Member ID: a1001 | Book ID: 0005 | Reservation Date: 12/12
