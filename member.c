@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-
+#include "main.h"
 
 void searchBook() {
     char title[50];
@@ -17,16 +15,16 @@ void searchBook() {
     int found = 0;
 
     while (fgets(line, sizeof(line), file)) {
-        char shelfID[10], bookID[10], bookTitle[50], author[50], genre[20], available[10], format[20];
+        char shelfID[10], bookID[10], bookTitle[50], author[50], genre[50], available[50],format[50];
         int copies;
 
 
-        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,],%d,%s",shelfID, bookID, bookTitle, author, genre, &copies, format);
+        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%s", shelfID, bookID, bookTitle, author, genre, available, format);
 
         if (strstr(bookTitle, title) != NULL) {
-            printf("Book found:\nID: %s\nTitle: %s\nAuthor: %s\nGenre: %s\nCopies Available: %d\nFormat: %s\n",
-                   bookID, bookTitle, author, genre, copies, format);
-            found = 5;
+            printf("Book found:\nID: %s\nTitle: %s\nAuthor: %s\nGenre: %s\nAvailability: %s\nFormat: %s\n",
+                   bookID, bookTitle, author, genre, available, format);
+            found = 1;
             break;
         }
     }
@@ -204,8 +202,6 @@ void reserve_book(void) {
 }
 
 
-
-
 void viewAccount() {
     FILE *file = fopen("account.txt", "r");
     if (file == NULL) {
@@ -251,6 +247,7 @@ void payFines() {
     fclose(file);
 }
 
+
 void recommendBooks() {
     FILE *books = fopen("book.txt", "r");
     if (books == NULL) {
@@ -291,7 +288,6 @@ void recommendBooks() {
 
 void membermenu() {
     int choice;
-
     while (1) {
         printf("\n--- Library Member Menu ---\n");
         printf("1. Search for a book\n");
@@ -327,5 +323,3 @@ void membermenu() {
         }
     }
 }
-
-
