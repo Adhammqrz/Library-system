@@ -4,7 +4,7 @@
 
 void searchBook() {
     char title[50];
-    FILE *file = fopen("books.txt", "r");
+    FILE *file = fopen("book.txt", "r");
     if (file == NULL) {
         printf("Error: Could not open books file.\n");
         return;
@@ -17,16 +17,16 @@ void searchBook() {
     int found = 0;
 
     while (fgets(line, sizeof(line), file)) {
-        char bookID[10], bookTitle[50], author[50], genre[20], available[10], format[20];
+        char shelfID[10], bookID[10], bookTitle[50], author[50], genre[20], available[10], format[20];
         int copies;
 
-       
-        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%d,%s", bookID, bookTitle, author, genre, &copies, format);
+
+        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,],%d,%s",shelfID, bookID, bookTitle, author, genre, &copies, format);
 
         if (strstr(bookTitle, title) != NULL) {
             printf("Book found:\nID: %s\nTitle: %s\nAuthor: %s\nGenre: %s\nCopies Available: %d\nFormat: %s\n",
                    bookID, bookTitle, author, genre, copies, format);
-            found = 1;
+            found = 5;
             break;
         }
     }
@@ -46,7 +46,7 @@ void reserve_book(void) {
     char continue_choice;
 
     do {
-        
+
         FILE *file = fopen("book.txt", "r");
         if (file == NULL) {
             printf("Error opening book.txt.\n");
@@ -69,24 +69,24 @@ void reserve_book(void) {
         int bookExists = 0;
         char reserveBookID[50];
 
-        
+
         while (!bookExists) {
             printf("Enter the Book ID you want to reserve (or type 'exit' to return to the menu): ");
             scanf("%s", reserveBookID);
 
-            
+
             if (strcmp(reserveBookID, "exit") == 0) {
-                return;  
+                return;
             }
 
-            
+
             file = fopen("book.txt", "r");
             if (file == NULL) {
                 printf("Error opening book.txt.\n");
                 return;
             }
 
-           
+
             while (fgets(line, sizeof(line), file)) {
                 char bookID[50];
                 sscanf(line, "%*[^,],%49[^,]", bookID);
@@ -102,7 +102,7 @@ void reserve_book(void) {
             }
         }
 
-        
+
         FILE *borrowfile = fopen("borrowbook.txt", "r");
         if (borrowfile == NULL) {
             printf("Error opening borrowbook.txt\n");
@@ -130,13 +130,13 @@ void reserve_book(void) {
             printf("No borrow records found for Book ID %s.\n", reserveBookID);
         }
 
-       
+
         printf("Do you want to reserve the book with ID %s? (y/n): ", reserveBookID);
-        getchar();  
+        getchar();
         scanf("%c", &continue_choice);
 
         if (continue_choice == 'y' || continue_choice == 'Y') {
-            
+
             printf("Enter your Member ID: ");
             scanf("%s", member_id);
 
@@ -156,19 +156,19 @@ void reserve_book(void) {
             fclose(memberfile);
 
             if (found) {
-                
+
                 printf("Enter the day of reservation: ");
                 scanf("%d", &day);
                 printf("Enter the month of reservation: ");
                 scanf("%d", &month);
 
-                
+
                 if (day < 1 || day > 31 || month < 1 || month > 12) {
                     printf("Invalid date. Please enter a valid day and month.\n");
                     continue;
                 }
 
-               
+
                 FILE *reservationFile = fopen("reservation.txt", "a");
                 if (reservationFile == NULL) {
                     printf("Error opening reservation.txt\n");
@@ -178,7 +178,7 @@ void reserve_book(void) {
                 fprintf(reservationFile, "%s,%s,%02d/%02d\n", member_id, reserveBookID, day, month);
                 fclose(reservationFile);
 
-                
+
                 FILE *accountFile = fopen("account.txt", "a");
                 if (accountFile == NULL) {
                     printf("Error opening account.txt\n");
