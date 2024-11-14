@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include "main.h"
 
 // Function declarations
 int login(char *username);
@@ -69,11 +67,11 @@ int login(char *username) {
         } else {
             printf("Invalid username or password.\n");
         }
-        
+
         printf("Enter Y to login again or any other key to exit: ");
         getchar();
         scanf("%c", &continue_choice);
-        
+
     } while (continue_choice == 'Y' || continue_choice == 'y');
 
     return 0; // Login was unsuccessful
@@ -351,10 +349,10 @@ void service(void) {
         }
     }
 
-    fclose(servicefile); 
+    fclose(servicefile);
 }
 
-void reserve_book(void) {
+void reserves_book(void) {
     int duration = 0;
     char day[10];
     char member_id[50], line[256], continue_choice;
@@ -365,11 +363,11 @@ void reserve_book(void) {
             printf("Error opening book.txt.\n");
             return;
         }
-        
+
         printf("\n%-10s %-10s %-30s %-30s %-20s %-10s %-20s\n",
                "Shelf ID", "Book ID", "Book Name", "Author Name", "Genre", "Quantity", "Type");
         printf("-------------------------------------------------------------------------------------------------------------------------------\n");
-        
+
         while (fgets(line, sizeof(line), file)) {
             char shelfID[50], bookID[50], bookName[256], author[256], genre[256], quantity[50], type[256];
             sscanf(line, "%49[^,],%49[^,],%255[^,],%255[^,],%255[^,],%49[^,],%255[^\n]",
@@ -381,21 +379,21 @@ void reserve_book(void) {
 
         char reserveBookID[50];
         int bookExists = 0;
-        
+
         while (!bookExists) {
             printf("Enter the Book ID you want to reserve (or type 'back' to back to the menu): ");
             scanf("%s", reserveBookID);
-            
+
             if (strcmp(reserveBookID, "back") == 0) {
                 return;
             }
-            
+
             file = fopen("book.txt", "r");
             if (file == NULL) {
                 printf("Error opening book.txt.\n");
                 return;
             }
-            
+
             while (fgets(line, sizeof(line), file)) {
                 char bookID[50];
                 sscanf(line, "%*[^,],%49[^,]", bookID);
@@ -405,7 +403,7 @@ void reserve_book(void) {
                 }
             }
             fclose(file);
-            
+
             if (!bookExists) {
                 printf("Book ID %s not found. Please enter a valid Book ID or type 'exit' to return to the menu.\n", reserveBookID);
             }
@@ -417,7 +415,7 @@ void reserve_book(void) {
             printf("Error opening borrowbook.txt.\n");
             return;
         }
-        
+
         printf("\nBorrow History for Book ID %s:\n", reserveBookID);
         printf("%-10s %-10s %-20s %-10s %-10s %-10s\n", "Member ID", "Book ID", "Book Name", "Date", "Status", "Overdue Days");
         printf("--------------------------------------------------------------------------\n");
@@ -441,17 +439,17 @@ void reserve_book(void) {
         printf("Do you want to reserve the book with ID %s? (y/n): ", reserveBookID);
         getchar();
         scanf("%c", &continue_choice);
-        
+
         if (continue_choice == 'y' || continue_choice == 'Y') {
             printf("Enter your Member ID: ");
             scanf("%s", member_id);
-            
+
             FILE *memberfile = fopen("member.txt", "r");
             if (memberfile == NULL) {
                 printf("Error opening member.txt\n");
                 return;
             }
-            
+
             int found = 0;
             while (fgets(line, sizeof(line), memberfile)) {
                 if (strstr(line, member_id) != NULL) {
@@ -460,7 +458,7 @@ void reserve_book(void) {
                 }
             }
             fclose(memberfile);
-            
+
             if (found) {
                 file = fopen("book.txt", "r");
                 FILE *tempfile = fopen("temp.txt", "w");
@@ -471,15 +469,15 @@ void reserve_book(void) {
 
                 char shelfID[50], bookID[50], bookName[256], author[256], genre[256], type[256], quantity[50];
                 int availableQuantity = 0;
-                
+
                 while (fgets(line, sizeof(line), file)) {
                     sscanf(line, "%49[^,],%49[^,],%255[^,],%255[^,],%255[^,],%49[^,],%255[^\n]",
                            shelfID, bookID, bookName, author, genre, quantity, type);
-                    
+
                     if (strcmp(bookID, reserveBookID) == 0) {
                         availableQuantity = atoi(quantity);
                         printf("Available Quantity: %d\n", availableQuantity);
-                        
+
                         printf("How many copies do you want to reserve? ");
                         int quantity_reserve;
                         scanf("%d", &quantity_reserve);
@@ -489,7 +487,7 @@ void reserve_book(void) {
                             availableQuantity -= quantity_reserve;
                             fprintf(tempfile, "%s,%s,%s,%s,%s,%d,%s\n",
                                     shelfID, bookID, bookName, author, genre, availableQuantity, type);
-                            
+
                             FILE *reservefile = fopen("reservation.txt", "a");
                             if (reservefile != NULL) {
                                 printf("Enter day for reserve (DD/MM/YY): ");
@@ -513,18 +511,18 @@ void reserve_book(void) {
                 }
                 fclose(file);
                 fclose(tempfile);
-                
+
                 remove("book.txt");
                 rename("temp.txt", "book.txt");
             } else {
                 printf("Member ID not found in member.txt\n");
             }
         }
-        
+
         printf("Do you want to reserve for another book? (y/n): ");
         getchar();
         scanf("%c", &continue_choice);
-        
+
     } while (continue_choice == 'Y' || continue_choice == 'y');
 }
 
@@ -586,13 +584,13 @@ void list_shelf(void){
     char shelf_id[256];
     int found = 0;
     char continue_choice;
-    
+
     FILE *file = fopen("book.txt","r");
     if (file == NULL){
         printf("Error open book.txt");
         return;
     }
-    
+
     do{
         printf("Enter Shelf ID to list: ");
         scanf(" %[^\n]s", shelf_id);
@@ -604,7 +602,7 @@ void list_shelf(void){
             char shelfID[50], bookID[50], bookName[256], author[256], genre[256], quantity[50], type[256];
             sscanf(line, "%49[^,],%49[^,],%255[^,],%255[^,],%255[^,],%49[^,],%255[^\n]",
                    shelfID, bookID, bookName, author, genre, quantity, type);
-            
+
             if (strstr(shelfID, shelf_id) != NULL) {
                 printf("%-10s %-10s %-30s %-30s %-20s %-10s %-20s\n", shelfID, bookID, bookName, author, genre, quantity, type);
                 found = 1;
@@ -617,7 +615,7 @@ void list_shelf(void){
         getchar();  // Clear newline from buffer
         scanf("%c", &continue_choice);
     }while (continue_choice == 'y' || continue_choice == 'Y');
-    
+
     fclose(file);
 }
 
@@ -629,102 +627,102 @@ void update_shelf(void) {
     int found = 0;
     int bookFound = 0;
     char continue_choice;
-    
+
     do {
         FILE *file = fopen("book.txt", "r");
         if (file == NULL) {
             printf("Error opening book.txt.\n");
             return;
         }
-        
+
         printf("\n%-10s %-10s %-30s %-30s %-20s %-10s %-20s\n",
                "Shelf ID", "Book ID", "Book Name", "Author Name", "Genre", "Quantity", "Type");
         printf("-------------------------------------------------------------------------------------------------------------------------------\n");
-        
+
         while (fgets(line, sizeof(line), file)) {
             char shelfID[50], bookID[50], bookName[256], author[256], genre[256], quantity[256], type[256];
             sscanf(line, "%49[^,],%49[^,],%255[^,],%255[^,],%255[^,],%49[^,],%255[^\n]",
                    shelfID, bookID, bookName, author, genre, quantity, type);
-            
+
             if (strcmp(type, "Physical") == 0) {
                 printf("%-10s %-10s %-30s %-30s %-20s %-10s %-20s\n", shelfID, bookID, bookName, author, genre, quantity, type);
             }
             found = 1;
         }
-        
+
         if (!found) {
             printf("No books found.\n");
             fclose(file);
             return;
         }
-        
+
         printf("Enter Book ID to update placement: ");
         scanf("%s", book_id);
-        
+
         rewind(file);
-        
+
         while (fgets(line, sizeof(line), file)) {
             char shelfID[50], bookID[50], bookName[256], author[256], genre[256], quantity[256], type[256];
             sscanf(line, "%49[^,],%49[^,],%255[^,],%255[^,],%255[^,],%49[^,],%255[^\n]",
                    shelfID, bookID, bookName, author, genre, quantity, type);
-            
+
             if (strcmp(book_id, bookID) == 0) {
                 do {
                     printf("Enter Shelf ID for Book %s: ", book_id);
                     scanf("%s", shelf_id);
-                    
+
                     if (strcmp(shelf_id, "-") == 0) {
                         break;
                     }
-                    
+
                     break;
-                    
+
                 } while (1);
-                
+
                 bookFound = 1;
                 break;
             }
         }
-        
+
         if (!bookFound) {
             printf("Book ID %s not found.\n", book_id);
             fclose(file);
             return;
         }
-        
+
         FILE *loadFile = fopen("load.txt", "w");
         if (loadFile == NULL) {
             printf("Error opening load file.\n");
             fclose(file);
             return;
         }
-        
+
         // Write the updated file with the new shelf ID for the selected book
         rewind(file);  // Return to the start of book.txt to copy contents
         while (fgets(line, sizeof(line), file)) {
             char shelfID[50], bookID[50], bookName[256], author[256], genre[256], quantity[256], type[256];
             sscanf(line, "%49[^,],%49[^,],%255[^,],%255[^,],%255[^,],%49[^,],%255[^\n]",
                    shelfID, bookID, bookName, author, genre, quantity, type);
-            
+
             if (strcmp(book_id, bookID) == 0) {
                 fprintf(loadFile, "%s,%s,%s,%s,%s,%s,%s\n", shelf_id, bookID, bookName, author, genre, quantity, type);
             } else {
                 fprintf(loadFile, "%s", line);
             }
         }
-        
+
         fclose(file);
         fclose(loadFile);
-        
+
         remove("book.txt");
         rename("load.txt", "book.txt");
-        
+
         if (strcmp(shelf_id, "-") == 0) {
             printf("Book %s has been removed from the shelf.\n", book_id);
         } else {
             printf("Book %s has been placed on Shelf ID %s.\n", book_id, shelf_id);
         }
-        
+
         printf("Do you want to place another book? (y/n): ");
         getchar();
         scanf("%c", &continue_choice);
@@ -784,19 +782,19 @@ void digital_resource_assistance(void) {
                 printf("Error: Invalid option.\n");
                 break;
         }
-        
+
     }
 }
 
 void e_books(void) {
     char line[256];
-    
+
     FILE *file = fopen("book.txt", "r");
     if (file == NULL) {
         printf("Error opening book.txt.\n");
         return;
     }
-    
+
     printf("\n%-10s %-10s %-30s %-30s %-20s %-10s %-20s\n",
            "Shelf ID", "Book ID", "Book Name", "Author Name", "Genre", "Quantity", "Type");
     printf("-------------------------------------------------------------------------------------------------------------------------------\n");
@@ -805,7 +803,7 @@ void e_books(void) {
         char shelfID[50], bookID[50], bookName[256], author[256], genre[256], quantity[50], type[256];
         sscanf(line, "%49[^,],%49[^,],%255[^,],%255[^,],%255[^,],%49[^,],%255[^\n]",
                shelfID, bookID, bookName, author, genre, quantity, type);
-        
+
         if (strcmp(type, "Ebook") == 0) {
             printf("%-10s %-10s %-30s %-30s %-20s %-10s %-20s\n",
                    shelfID, bookID, bookName, author, genre, quantity, type);
@@ -813,16 +811,16 @@ void e_books(void) {
     }
     fclose(file);
 }
-    
+
 void online_journals(void) {
     char line[256];
-    
+
     FILE *file = fopen("book.txt", "r");
     if (file == NULL) {
         printf("Error opening book.txt.\n");
         return;
     }
-    
+
     printf("\n%-10s %-10s %-30s %-30s %-20s %-10s %-20s\n",
            "Shelf ID", "Book ID", "Book Name", "Author Name", "Genre", "Quantity", "Type");
     printf("-------------------------------------------------------------------------------------------------------------------------------\n");
@@ -831,7 +829,7 @@ void online_journals(void) {
         char shelfID[50], bookID[50], bookName[256], author[256], genre[256], quantity[50], type[256];
         sscanf(line, "%49[^,],%49[^,],%255[^,],%255[^,],%255[^,],%49[^,],%255[^\n]",
                shelfID, bookID, bookName, author, genre, quantity, type);
-        
+
         if (strcmp(type, "Online Journal") == 0) {
             printf("%-10s %-10s %-30s %-30s %-20s %-10s %-20s\n",
                    shelfID, bookID, bookName, author, genre, quantity, type);
@@ -842,13 +840,13 @@ void online_journals(void) {
 
 void audiobooks(void){
     char line[256];
-    
+
     FILE *file = fopen("book.txt", "r");
     if (file == NULL) {
         printf("Error opening book.txt.\n");
         return;
     }
-    
+
     printf("\n%-10s %-10s %-30s %-30s %-20s %-10s %-20s\n",
            "Shelf ID", "Book ID", "Book Name", "Author Name", "Genre", "Quantity", "Type");
     printf("-------------------------------------------------------------------------------------------------------------------------------\n");
@@ -856,7 +854,7 @@ void audiobooks(void){
         char shelfID[50], bookID[50], bookName[256], author[256], genre[256], quantity[50], type[256];
         sscanf(line, "%49[^,],%49[^,],%255[^,],%255[^,],%255[^,],%49[^,],%255[^\n]",
                shelfID, bookID, bookName, author, genre, quantity, type);
-        
+
         if (strcmp(type, "AudioBook") == 0) {
             printf("%-10s %-10s %-30s %-30s %-20s %-10s %-20s\n",
                    shelfID, bookID, bookName, author, genre, quantity, type);
@@ -866,14 +864,13 @@ void audiobooks(void){
 }
 
 // Main function
-int main(void) {
+int staffmenu(void) {
     int choice;
     char username[50];
 
-    if (login(username)) {  // Login successful
-        while (1) {
-            main_menu(username);
-            choice = menu_option();
+do{
+    main_menu(username);
+    choice = menu_option();
 
             switch (choice) {
                 case 1:
@@ -892,12 +889,7 @@ int main(void) {
                     printf("Error: Invalid option.\n");
                     break;
             }
-        }
-    } else {
-        printf("Login failed.\n");
-    }
+    }while (choice==4);
     return 0;
 }
-
-
 
