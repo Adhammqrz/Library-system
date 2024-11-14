@@ -1,7 +1,6 @@
 #include "main.h"
 
 // Function declarations
-int login(char *username);
 void main_menu(char *Username);
 int menu_option(void);
 
@@ -24,59 +23,6 @@ void digital_resource_assistance(void);
 void e_books(void);
 void online_journals(void);
 void audiobooks(void);
-
-int login(char *username) {
-    char password[50];
-    char line[256];
-    char continue_choice;
-
-    do {
-        printf("Enter your username: ");
-        scanf("%49s", username);
-
-        printf("Enter your password: ");
-        scanf("%49s", password);
-
-        FILE *file = fopen("user.txt", "r");
-        if (file == NULL) {
-            printf("Error opening user.txt\n");
-            return 0;
-        }
-
-        int loginSuccess = 0;
-
-        while (fgets(line, sizeof(line), file)) {
-            char fileUsername[50], filePassword[50], role[50];
-            sscanf(line, "%49[^,],%49[^,],%49[^,\n]", fileUsername, filePassword, role);
-
-            if (strcmp(username, fileUsername) == 0 && strcmp(password, filePassword) == 0) {
-                if (strcmp(role, "Staff") == 0 || strcmp(role, "Admin") != 0) {
-                    printf("Login successful!\n");
-                    loginSuccess = 1;
-                    break;
-                } else {
-                    printf("Access denied. Role is not allowed.\n");
-                    break;
-                }
-            }
-        }
-        fclose(file);
-
-        if (loginSuccess) {
-            return 1; // Login was successful
-        } else {
-            printf("Invalid username or password.\n");
-        }
-
-        printf("Enter Y to login again or any other key to exit: ");
-        getchar();
-        scanf("%c", &continue_choice);
-
-    } while (continue_choice == 'Y' || continue_choice == 'y');
-
-    return 0; // Login was unsuccessful
-}
-
 
 void main_menu(char *username) {
     printf("-----------------------------------\n");
