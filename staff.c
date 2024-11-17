@@ -376,8 +376,7 @@ void reserves_book(void) {
 
                         if (quantity_reserve > 0 && quantity_reserve <= book.quantity) {
                             book.quantity -= quantity_reserve;
-                            fprintf(tempfile, "%s,%s,%s,%s,%s,%d,%s\n",
-                                    book.shelfID, book.id, book.title, book.author, book.genre, book.quantity, book.type);
+                            printf("Reservation successful! Reserved %d copies of '%s'.\n", quantity_reserve, book.title);
 
                             FILE *reservefile = fopen("reservation.txt", "a");
                             if (reservefile != NULL) {
@@ -388,11 +387,15 @@ void reserves_book(void) {
                                 fprintf(reservefile, "%s,%s,%s,%d,%s,%d\n",
                                         member_username, book.id, book.title, quantity_reserve, day, duration);
                                 fclose(reservefile);
-                                printf("Reservation successful! Reserved %d copies of '%s'.\n", quantity_reserve, book.title);
                             }
-                        } else {
-                            printf("Not enough copies available to reserve.\n");
+                        } else if (quantity_reserve > book.quantity) {
+                            printf("Not enough copies available to reserve. Keeping the book quantity unchanged.\n");
                         }
+
+                        fprintf(tempfile, "%s,%s,%s,%s,%s,%d,%s\n",
+                                book.shelfID, book.id, book.title, book.author, book.genre,
+                                book.quantity < 0 ? 0 : book.quantity,  // Ensure quantity is never negative.
+                                book.type);
                     } else {
                         fprintf(tempfile, "%s,%s,%s,%s,%s,%d,%s\n",
                                 book.shelfID, book.id, book.title, book.author, book.genre, book.quantity, book.type);
@@ -414,6 +417,7 @@ void reserves_book(void) {
 
     } while (continue_choice == 'Y' || continue_choice == 'y');
 }
+
 
 
 void shelf_page(void) {
